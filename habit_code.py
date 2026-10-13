@@ -1,3 +1,4 @@
+import datetime
 class Habit:
 
     def add_habit(self,hab):
@@ -7,6 +8,57 @@ class Habit:
             else:
                 return "enter valid habit"
         return "Habit is added."
+
+
+
+    @staticmethod
+    def mark_habit():
+
+        try:
+            with open ("habit_record.txt","r") as f:
+                data=f.readlines()
+        except FileNotFoundError:
+            return "add habit in file first"
+
+        if len(data)==0:
+            return "No habit stored"
+
+        for number,line in enumerate(data,start=1):
+            print(number,line.strip())
+
+        while True:
+            today=(datetime.date.today().isoformat())
+
+            try:
+                choice=int(input("Enter the no. of habit you want to mark :  "))
+            except Exception as e:
+                print("please enter valid number")
+                continue
+
+            if choice<1 or choice>len(data):
+                print("No. habit with that number.")
+                continue
+            if data[choice-1][:-1].endswith(":"):
+                data[choice-1]=(data[choice-1]).rstrip("\n")+today+"\n"
+            else:
+
+                if today not in data[choice-1] :
+                    data[choice-1]=(data[choice-1]).rstrip("\n")+","+today+"\n"
+                else:
+                    print("You already marked this habit today.")
+
+            conti=input("Enter whether you want to continue or not (y/n) : ")
+            if conti =="y":
+                continue
+            else :
+                break
+
+        with open("habit_record.txt","w") as f:
+            f.writelines(data)
+        return "Your records was marked."
+    
+
+
 
 
 # ___________main___________
@@ -25,5 +77,8 @@ if __name__=="__main__":
         if choice == 1 :
             hab=input("Enter the habit to be added : ")
             print(obj.add_habit(hab))
+
+        elif choice == 2:
+            obj.mark_habit()
         else:
             break
