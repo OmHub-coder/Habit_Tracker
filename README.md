@@ -4,3 +4,4 @@
 1.add your habit<br/>
 2.mark the habit <br/>
 3.Viewing the habit marked done and the habit are in pending.<br/>
+4.Deleting a habit<br/>

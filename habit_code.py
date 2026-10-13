@@ -86,13 +86,50 @@ class Habit:
         return "This is your progress."
 
 
+    @staticmethod
+    def delete_habit():
+        try:
+            with open("habit_record.txt","r") as f:
+                data=f.readlines()
+        except FileNotFoundError:
+            return "No file found"
+
+        if len(data)==0:
+            return "NO habit in file first add the habit."
+
+        for number,line in enumerate(data,start=1):
+            print(number,line.strip().split(":")[0])
+
+        while True:
+            choice=int(input("Enter the number of habit you want to remove : "))
+
+            if choice < 1 or choice > len(data):
+                print("No habit with that number.")
+                continue
+            else :
+                data.pop(choice-1)
+
+            for number,line in enumerate(data,start=1):
+                print(number,line.strip())
+
+            conti=input("Whether you want to continue deleting the habit or not (y/n) : ")
+            if conti != "y":
+                break
+
+        with open("habit_record.txt","w") as f:
+            f.writelines(data)
+
+
+        return "Your habit is deleted."
+
+    
 
 # ___________main___________
 if __name__=="__main__":
     obj=Habit()
     print("\n______________Welcome to the habit tracker application______________\n")
     while True:
-        print("\n1.Add a habit\n2.Mark the habit as done\n3.Veiw your habit mark done today\n4.exit\n")
+        print("\n1.Add a habit\n2.Mark the habit as done\n3.Veiw your habit mark done today\n4.Deleting a habit\n5.exit\n")
 
         try:
             choice=int(input("Enter your choice : "))
@@ -105,9 +142,12 @@ if __name__=="__main__":
             print(obj.add_habit(hab))
 
         elif choice == 2:
-            obj.mark_habit()
+            print(obj.mark_habit())
 
         elif choice==3:
-            obj.Veiw_today()
+            print(obj.Veiw_today())
+
+        elif choice == 4 :
+            print(obj.delete_habit())
         else:
             break
