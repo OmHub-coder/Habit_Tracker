@@ -56,8 +56,34 @@ class Habit:
         with open("habit_record.txt","w") as f:
             f.writelines(data)
         return "Your records was marked."
-    
 
+
+    
+    @staticmethod
+    def Veiw_today():
+        today=(datetime.date.today().isoformat())
+        
+        try:
+            with open("habit_record.txt","r") as f:
+                data=f.readlines()
+        except FileNotFoundError:
+            return "no habit in file add it first."
+        
+        if len(data)==0:
+            return "No habit stored yet."
+        
+        print("\n\nhabit marked done are : \n")
+        for i in data:
+            if today in i :
+                print(i.strip().split(":")[0])
+
+        
+        print("\n\nhabit that are pending to be marked done : \n")
+        for i in data:
+            if today not in i :
+                print(i.strip().split(":")[0])
+
+        return "This is your progress."
 
 
 
@@ -80,5 +106,8 @@ if __name__=="__main__":
 
         elif choice == 2:
             obj.mark_habit()
+
+        elif choice==3:
+            obj.Veiw_today()
         else:
             break
