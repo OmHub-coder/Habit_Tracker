@@ -101,8 +101,10 @@ class Habit:
             print(number,line.strip().split(":")[0])
 
         while True:
-            choice=int(input("Enter the number of habit you want to remove : "))
-
+            try:
+                choice=int(input("Enter the number of habit you want to remove : "))
+            except ValueError:
+                print("enter the valid number.")
             if choice < 1 or choice > len(data):
                 print("No habit with that number.")
                 continue
@@ -110,7 +112,7 @@ class Habit:
                 data.pop(choice-1)
 
             for number,line in enumerate(data,start=1):
-                print(number,line.strip())
+                print(number,line.strip().split(":")[0])
 
             conti=input("Whether you want to continue deleting the habit or not (y/n) : ")
             if conti != "y":
