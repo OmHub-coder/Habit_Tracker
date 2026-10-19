@@ -1,5 +1,13 @@
 import datetime
 class Habit:
+    
+    def read(self):
+        try:
+            with open("habit_record.txt","r") as f:
+                data=f.readlines()
+                return data
+        except FileNotFoundError:
+            return "File is not found. Add a habit first"
 
     def add_habit(self,hab):
         with open("habit_record.txt","a") as f:
@@ -14,11 +22,7 @@ class Habit:
     @staticmethod
     def mark_habit():
 
-        try:
-            with open ("habit_record.txt","r") as f:
-                data=f.readlines()
-        except FileNotFoundError:
-            return "add habit in file first"
+        data=obj.read()
 
         if len(data)==0:
             return "No habit stored"
@@ -31,7 +35,7 @@ class Habit:
 
             try:
                 choice=int(input("Enter the no. of habit you want to mark :  "))
-            except Exception as e:
+            except ValueError:
                 print("please enter valid number")
                 continue
 
@@ -68,12 +72,8 @@ class Habit:
     def veiw_today():
         today=(datetime.date.today().isoformat())
         
-        try:
-            with open("habit_record.txt","r") as f:
-                data=f.readlines()
-        except FileNotFoundError:
-            return "no habit in file add it first."
-        
+        data=obj.read()
+
         if len(data)==0:
             return "No habit stored yet."
         
@@ -93,11 +93,8 @@ class Habit:
 
     @staticmethod
     def delete_habit():
-        try:
-            with open("habit_record.txt","r") as f:
-                data=f.readlines()
-        except FileNotFoundError:
-            return "No file found"
+        
+        data=obj.read()
 
         if len(data)==0:
             return "NO habit in file first add the habit."
@@ -135,11 +132,8 @@ class Habit:
 
     @staticmethod
     def rename_habit():
-        try:
-            with open("habit_record.txt","r") as f:
-                data=f.readlines()
-        except FileNotFoundError:
-            return "File is not found."
+        
+        data=obj.read()
         
         if len(data)==0:
             return "no habit to be renamed."
@@ -204,6 +198,6 @@ if __name__=="__main__":
 
         elif choice==6:
             break
-        
+
         else:
             print("Invalid choice")
