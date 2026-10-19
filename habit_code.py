@@ -19,8 +19,7 @@ class Habit:
 
 
 
-    @staticmethod
-    def mark_habit():
+    def mark_habit(self):
 
         data=obj.read()
 
@@ -68,8 +67,7 @@ class Habit:
 
 
     
-    @staticmethod
-    def veiw_today():
+    def veiw_today(self):
         today=(datetime.date.today().isoformat())
         
         data=obj.read()
@@ -91,8 +89,8 @@ class Habit:
         return "This is your progress."
 
 
-    @staticmethod
-    def delete_habit():
+    
+    def delete_habit(self):
         
         data=obj.read()
 
@@ -130,8 +128,8 @@ class Habit:
         return "Your habit is deleted."
 
 
-    @staticmethod
-    def rename_habit():
+    
+    def rename_habit(self):
         
         data=obj.read()
         
