@@ -1,35 +1,45 @@
-import datetime
+import datetime # date module to get date
+
+#class creation
 class Habit:
     
+    # function to read the file in line format andd return data in list
     def read(self):
         try:
             with open("habit_record.txt","r") as f:
                 data=f.readlines()
                 return data
         except FileNotFoundError:
-            return "File is not found. Add a habit first"
+            return []
 
-    def add_habit(self,hab):
-        with open("habit_record.txt","a") as f:
-            if len(hab)!=0:
-                f.write(hab+":\n")
-            else:
-                return "enter valid habit"
+
+
+    #function to add habit in file
+    def add_habit(self, hab):
+        hab = hab.strip()
+
+        if not hab:
+            return "Enter a valid habit."
+
+        with open("habit_record.txt", "a") as f:
+            f.write(hab + ":\n")
+
         return "Habit is added."
 
 
 
+    #function to mark habit as done in file
     def mark_habit(self):
 
-        data=obj.read()
+        data=obj.read()     #to read data from file using read function
 
         if len(data)==0:
             return "No habit stored"
         
-        today=(datetime.date.today().isoformat())
+        today=(datetime.date.today().isoformat())   #to get today date in YYYY-MM-DD format
 
         while True:
-            for number,line in enumerate(data,start=1):
+            for number,line in enumerate(data,start=1):       
                 print(number,line.strip())
 
             try:
@@ -45,12 +55,13 @@ class Habit:
             left, right = data[choice-1].strip().split(":")
             if right == "":
              # first mark
-                data[choice-1]=(data[choice-1]).rstrip("\n")+today+"\n"
+                data[choice-1]=(data[choice-1]).rstrip("\n")+today+"\n"             
 
             else:
 
-                if today not in data[choice-1] :
-                    data[choice-1]=(data[choice-1]).rstrip("\n")+","+today+"\n"
+                dates = right.split(",") if right else []
+                if today not in dates:
+                    data[choice-1] = (data[choice-1].rstrip("\n") + "," + today + "\n")
                 else:
                     print("You already marked this habit today.")
 
@@ -67,6 +78,7 @@ class Habit:
 
 
     
+    #function to view whether the habit is done or not today
     def veiw_today(self):
         today=(datetime.date.today().isoformat())
         
@@ -89,7 +101,8 @@ class Habit:
         return "This is your progress."
 
 
-    
+
+    #function t delete a existing habit from data    
     def delete_habit(self):
         
         data=obj.read()
@@ -129,6 +142,7 @@ class Habit:
 
 
     
+    #function to rename a habit 
     def rename_habit(self):
         
         data=obj.read()
@@ -150,11 +164,15 @@ class Habit:
             if choice<1 or choice>len(data):
                 print("Enter the valid number to select the habit.")
             else:
-                rename=input("Enter the new name of habit :  ")
-                left,right=data[choice-1].strip().split(":")
-                data[choice-1]=rename+":"+right+"\n"
+                rename=input("Enter the new name of habit :  ").strip()
+                if not rename or ":" in rename:
+                    print("Enter the valid name without : this  ")
+                    continue
+                else:
+                    left,right=data[choice-1].strip().split(":")
+                    data[choice-1]=rename+":"+right+"\n"
             
-            conti=input("Enter whether you want to continue or not (y/n):  ")
+            conti=input("Enter whether you want to continue or not (y/n):  ").strip()
             if conti not in "yY":
                 break
 
@@ -166,9 +184,16 @@ class Habit:
             
 
 # ___________main___________
+
 if __name__=="__main__":
+
+    #object creation
     obj=Habit()
+
+    #MENU
     print("\n______________Welcome to the habit tracker application______________\n")
+
+    #infinite loop t take choice of user
     while True:
         print("\n1.Add a habit\n2.Mark the habit as done\n3.Veiw your habit mark done today\n4.Deleting a habit\n5.Rename a habit\n6.exit\n")
 
