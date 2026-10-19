@@ -25,14 +25,14 @@ The application allows users to add habits, mark them as completed, view their d
 ## Project Structure
 
 ```text
-python-habit-tracker/
-├── main.py
+Habit_Tracker/
+├── habit_code.py
 ├── habit_record.txt
 ├── README.md
 └── .gitignore
 ```
 
-`main.py` contains the application code.
+`habit_code.py` contains the application code.
 
 `habit_record.txt` stores habit names and completion dates. The file is created when habits are added.
 
@@ -58,19 +58,19 @@ Replace the placeholder with your actual repository URL.
 **2. Open the project folder**
 
 ```bash
-cd python-habit-tracker
+cd Habit_Tracker
 ```
 
 **3. Run the application**
 
 ```bash
-python main.py
+python habit_code.py
 ```
 
 If your system uses the `py` command on Windows, you can also run:
 
 ```bash
-py main.py
+py habit_code.py
 ```
 
 ## How It Works
