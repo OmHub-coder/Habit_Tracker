@@ -29,12 +29,13 @@ Habit_Tracker/
 ├── habit_code.py
 ├── habit_record.txt
 ├── README.md
+├── LICENSE
 └── .gitignore
 ```
 
 `habit_code.py` contains the application code.
 
-`habit_record.txt` stores habit names and completion dates. The file is created when habits are added.
+`habit_record.txt` stores habit names and completion dates. It is created automatically when you add your first habit, and it is not tracked by Git, so your habits stay on your computer.
 
 `.gitignore` specifies files that should not be tracked by Git.
 
@@ -50,10 +51,8 @@ No external Python packages are required.
 **1. Clone the repository**
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/OmHub-coder/Habit_Tracker.git
 ```
-
-Replace the placeholder with your actual repository URL.
 
 **2. Open the project folder**
 
