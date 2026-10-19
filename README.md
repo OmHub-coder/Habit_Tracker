@@ -1,4 +1,4 @@
-# Python Habit Tracker
+# Python Habit_Tracker
 
 A simple command-line Habit Tracker built with Python. This is my first Python project, created to practise programming fundamentals by building a small, practical application.
 
