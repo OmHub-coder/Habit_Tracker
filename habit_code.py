@@ -22,12 +22,12 @@ class Habit:
 
         if len(data)==0:
             return "No habit stored"
-
-        for number,line in enumerate(data,start=1):
-            print(number,line.strip())
+        
+        today=(datetime.date.today().isoformat())
 
         while True:
-            today=(datetime.date.today().isoformat())
+            for number,line in enumerate(data,start=1):
+                print(number,line.strip())
 
             try:
                 choice=int(input("Enter the no. of habit you want to mark :  "))
@@ -38,8 +38,12 @@ class Habit:
             if choice<1 or choice>len(data):
                 print("No. habit with that number.")
                 continue
-            if data[choice-1][:-1].endswith(":"):
+
+            left, right = data[choice-1].strip().split(":")
+            if right == "":
+             # first mark
                 data[choice-1]=(data[choice-1]).rstrip("\n")+today+"\n"
+
             else:
 
                 if today not in data[choice-1] :
@@ -55,12 +59,13 @@ class Habit:
 
         with open("habit_record.txt","w") as f:
             f.writelines(data)
+
         return "Your records was marked."
 
 
     
     @staticmethod
-    def Veiw_today():
+    def veiw_today():
         today=(datetime.date.today().isoformat())
         
         try:
@@ -97,14 +102,17 @@ class Habit:
         if len(data)==0:
             return "NO habit in file first add the habit."
 
-        for number,line in enumerate(data,start=1):
-            print(number,line.strip().split(":")[0])
 
         while True:
+            for number,line in enumerate(data,start=1):
+                print(number,line.strip().split(":")[0])
+
             try:
                 choice=int(input("Enter the number of habit you want to remove : "))
             except ValueError:
                 print("enter the valid number.")
+                continue
+
             if choice < 1 or choice > len(data):
                 print("No habit with that number.")
                 continue
@@ -124,14 +132,53 @@ class Habit:
 
         return "Your habit is deleted."
 
+
+    @staticmethod
+    def rename_habit():
+        try:
+            with open("habit_record.txt","r") as f:
+                data=f.readlines()
+        except FileNotFoundError:
+            return "File is not found."
+        
+        if len(data)==0:
+            return "no habit to be renamed."
+
+        
+        while True:
+            for number,line in enumerate(data,start=1):
+                print(number,line.strip().split(":")[0])
+
+            try:
+                choice=int(input("Enter the no. of which you want to rename :  "))
+            except ValueError:
+                print("enter valid input")
+                continue
+             
+            if choice<1 or choice>len(data):
+                print("Enter the valid number to select the habit.")
+            else:
+                rename=input("Enter the new name of habit :  ")
+                left,right=data[choice-1].strip().split(":")
+                data[choice-1]=rename+":"+right+"\n"
+            
+            conti=input("Enter whether you want to continue or not (y/n):  ")
+            if conti not in "yY":
+                break
+
+        with open("habit_record.txt","w") as f:
+            f.writelines(data)
+        
+        return "Your habit was sucessfuly renamed."
     
+            
 
 # ___________main___________
 if __name__=="__main__":
     obj=Habit()
     print("\n______________Welcome to the habit tracker application______________\n")
     while True:
-        print("\n1.Add a habit\n2.Mark the habit as done\n3.Veiw your habit mark done today\n4.Deleting a habit\n5.exit\n")
+        print("\n1.Add a habit\n2.Mark the habit as done\n3.Veiw your habit mark done today\n4.Deleting a habit\n5.Rename a habit\n6.exit\n")
 
         try:
             choice=int(input("Enter your choice : "))
@@ -147,9 +194,16 @@ if __name__=="__main__":
             print(obj.mark_habit())
 
         elif choice==3:
-            print(obj.Veiw_today())
+            print(obj.veiw_today())
 
         elif choice == 4 :
             print(obj.delete_habit())
-        else:
+        
+        elif choice ==5 :
+            print(obj.rename_habit())
+
+        elif choice==6:
             break
+        
+        else:
+            print("Invalid choice")
